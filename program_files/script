@@ -21,7 +21,7 @@ echo '{
 }' > request.json
 
 
-curl https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key="AIzaSyDYnOEvQtAEtWHRr0M6pVU4w4Be_-5XTpI" \
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=$GOOGLE_API_KEY \
         -H 'Content-Type: application/json' \
         -d @request.json 2> /dev/null | grep "text" > output.txt
 
