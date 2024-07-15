@@ -1,0 +1,32 @@
+#!/bin/bash
+
+shutter -s -e -n -o ./image.jpg
+#screencapture -so ./image.jpg
+#the 1st like is for kde desktop and the 2nd line is for macOS uncomment the above line if u are using it on a mac.
+
+echo '{
+  "contents":[
+    {
+      "parts":[
+        {"text": "solve this problem if its a coding problem then write its code if its not then give the answer if its an mcq give me the correct option"},
+        {
+          "inline_data": {
+            "mime_type":"image/jpeg",
+            "data": "'$(base64 -w0 image.jpg)'"
+          }
+        }
+      ]
+    }
+  ]
+}' > request.json
+
+
+curl https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key="AIzaSyDYnOEvQtAEtWHRr0M6pVU4w4Be_-5XTpI" \
+        -H 'Content-Type: application/json' \
+        -d @request.json 2> /dev/null | grep "text" > output.txt
+
+cat output.txt
+rm image.jpg
+python pop_up.py
+rm output.txt 
+rm request.json
